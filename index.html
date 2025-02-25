@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clothing Store</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="search-container">
+    <input type="text" id="search-bar" placeholder="Search clothes...">
+    <button id="search-btn">Search</button>
+    <a href="stats.html" class="stats-link">View Statistics</a>
+  </div>
+  <div class="grid-container" id="clothes-grid"></div>
+  <div class="modal" id="item-modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <div class="modal-item" id="modal-item-content"></div>
+      <button class="confirm-btn" id="confirm-btn">Confirm</button>
+    </div>
+  </div>
+  <div id="alert-container"></div>
+  <script src="script.js"></script>
+</body>
+</html>
