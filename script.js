@@ -1,39 +1,4 @@
-// Dummy data with sold field
-const dummyData = [
-  {
-    name: "Shirt",
-    code: "S123",
-    price: 20,
-    cost: 15,
-    image: "https://via.placeholder.com/300x200?text=Shirt",
-    sold: 12,
-  },
-  {
-    name: "Pants",
-    code: "P456",
-    price: 30,
-    cost: 25,
-    image: "https://via.placeholder.com/300x200?text=Pants",
-    sold: 8,
-  },
-  {
-    name: "Jacket",
-    code: "J789",
-    price: 50,
-    cost: 40,
-    image: "https://via.placeholder.com/300x200?text=Jacket",
-    sold: 5,
-  },
-  {
-    name: "T-Shirt",
-    code: "T012",
-    price: 15,
-    cost: 10,
-    image: "https://via.placeholder.com/300x200?text=T-Shirt",
-    sold: 20,
-  },
-];
-
+const baseUrl = "http://testapi.bluestore.az";
 let allClothes = []; // Store full dataset for filtering
 function getCost(item) {
   return item.fabric_cost + item.labor_cost + item.other_cost;
@@ -105,16 +70,18 @@ function openModal(item) {
 
   confirmBtn.onclick = async () => {
     try {
-      const response = await fetch("http://testapi.bluestore.az/orders", {
+      const response = await fetch(baseUrl + "/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clothe_id: item.code }),
+        body: JSON.stringify({ clothe_id: item.id }),
       });
-
       if (!response.ok) throw new Error("Failed to submit order");
 
       showAlert("Order confirmed successfully!", "success");
       modal.style.display = "none";
+
+      // Refetch data to update the screen
+      await fetchClothes(document.getElementById("search-bar").value.trim());
     } catch (error) {
       console.error("Error submitting order:", error);
       showAlert("Failed to confirm order. Please try again.", "error");
@@ -129,8 +96,8 @@ async function fetchClothes(query = "") {
 
   try {
     const url = query
-      ? `http://testapi.bluestore.az/clothes?query=${encodeURIComponent(query)}`
-      : "http://testapi.bluestore.az/clothes";
+      ? `${baseUrl}/clothes?query=${encodeURIComponent(query)}`
+      : baseUrl + "/clothes";
     const response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -146,7 +113,7 @@ async function fetchClothes(query = "") {
     grid.innerHTML =
       "<div class='error'>Failed to load clothes. Showing dummy data instead.</div>";
     allClothes = dummyData;
-    renderClothes(dummyData);
+    renderClothes([]);
   }
 }
 
