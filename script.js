@@ -105,7 +105,7 @@ function openModal(item) {
 
   confirmBtn.onclick = async () => {
     try {
-      const response = await fetch("http://5.230.71.232:3000/orders", {
+      const response = await fetch("http://testapi.bluestore.az/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ clothe_id: item.code }),
@@ -129,8 +129,8 @@ async function fetchClothes(query = "") {
 
   try {
     const url = query
-      ? `http://5.230.71.232:3000/clothes?query=${encodeURIComponent(query)}`
-      : "http://5.230.71.232:3000/clothes";
+      ? `http://testapi.bluestore.az/clothes?query=${encodeURIComponent(query)}`
+      : "http://testapi.bluestore.az/clothes";
     const response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
