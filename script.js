@@ -17,9 +17,11 @@ function renderClothes(clothes) {
           <div class="item-details">
             <div class="item-name">${item.name}</div>
             <div class="item-code">Code: ${item.code}</div>
-            <div class="item-price">$${item.price}</div>
-            <div class="item-cost">Cost: $${getCost(item)}</div>
-            <div class="item-sold">Sold: ${item.sold}</div>
+           <div class="item-stats">
+              <span class="item-price">₼${item.price}</span>
+              <span class="item-cost">Cost: ₼${getCost(item)}</span>
+              <span class="item-sold">Sold: ${item.sold}</span>
+            </div>
           </div>
         </div>
       `;
@@ -55,9 +57,11 @@ function openModal(item) {
       <img src="${item.image}" alt="${item.name}" class="item-image">
       <div class="item-name">${item.name}</div>
       <div class="item-code">Code: ${item.code}</div>
-      <div class="item-price">$${item.price}</div>
-      <div class="item-cost">Cost: $${getCost(item)}</div>
-      <div class="item-sold">Sold: ${item.sold}</div>
+      <div class="item-stats">
+        <span class="item-price">₼${item.price}</span>
+        <span class="item-cost">Cost: ₼${getCost(item)}</span>
+        <span class="item-sold">Sold: ${item.sold}</span>
+      </div>
     `;
 
   modal.style.display = "flex";
@@ -97,7 +101,8 @@ async function fetchClothes(query = "") {
   try {
     const url = query
       ? `${baseUrl}/clothes?query=${encodeURIComponent(query)}`
-      : baseUrl + "/clothes";
+      : `${baseUrl}/clothes`;
+    console.log(url);
     const response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -116,14 +121,22 @@ async function fetchClothes(query = "") {
     renderClothes([]);
   }
 }
-
 // Search functionality
-document.getElementById("search-btn").addEventListener("click", () => {
+function performSearch() {
   const query = document.getElementById("search-bar").value.trim();
   if (query) {
     fetchClothes(query); // Send query to localhost:3000/clothes
   } else {
     fetchClothes(); // Reset to full list if query is empty
+  }
+}
+// Button click search
+document.getElementById("search-btn").addEventListener("click", performSearch);
+
+// Enter key search
+document.getElementById("search-bar").addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    performSearch();
   }
 });
 

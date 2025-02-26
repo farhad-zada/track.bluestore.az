@@ -98,25 +98,37 @@ body {
 }
 
 .item-code,
-.item-cost,
-.item-sold {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 5px;
+
+/* Stats Row */
+.item-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px; /* Space between Price, Cost, and Sold */
+  margin-top: 8px;
 }
 
-.item-price {
+.item-stats .item-price {
   font-size: 1.1rem;
   font-weight: bold;
   color: #007bff;
   background-color: #e7f1ff;
-  display: inline-block;
   padding: 2px 8px;
   border-radius: 12px;
-  margin-bottom: 5px;
 }
 
-.item-sold {
+.item-stats .item-cost {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #5c3b4a;
+  background-color: #f4c2a1b7;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.item-stats .item-sold {
+  font-size: 0.9rem;
+  font-weight: 500;
   color: #28a745;
   background-color: #e9f7ef;
   padding: 2px 8px;
